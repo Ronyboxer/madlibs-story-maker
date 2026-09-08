@@ -4,10 +4,7 @@ import madLibTemplates from './madLibTemplates';
 import MadLibSelector from './MadLibSelector';
 import PlaceholderForm from './PlaceholderForm';
 import StoryResult from './StoryResult';
-
-function extractPlaceholders(template) {
-  return Array.from(template.matchAll(/\[([^\]]+)\]/g)).map(m => m[1]);
-}
+import { extractPlaceholders } from '../lib/story';
 
 export default function ChooseMadLibs() {
   const [step, setStep] = useState('select');
@@ -15,7 +12,7 @@ export default function ChooseMadLibs() {
   const [inputs, setInputs] = useState({});
 
   const template = selectedIdx !== null ? madLibTemplates[selectedIdx].template : '';
-  const placeholders = template ? extractPlaceholders(template) : [];
+  const placeholders = extractPlaceholders(template);
 
   return (
     <div className="madlibs-app">
@@ -24,7 +21,7 @@ export default function ChooseMadLibs() {
         <MadLibSelector templates={madLibTemplates} onSelect={idx => { setSelectedIdx(idx); setStep('fill'); setInputs({}); }} />
       )}
       {step === 'fill' && (
-        <PlaceholderForm template={template} placeholders={placeholders} onSubmit={vals => { setInputs(vals); setStep('result'); }} />
+        <PlaceholderForm placeholders={placeholders} onSubmit={vals => { setInputs(vals); setStep('result'); }} />
       )}
       {step === 'result' && (
         <StoryResult template={template} inputs={inputs} onTryAnother={() => { setStep('select'); setSelectedIdx(null); setInputs({}); }} />

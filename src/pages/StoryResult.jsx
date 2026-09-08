@@ -1,8 +1,7 @@
+import { fillTemplate } from '../lib/story';
+
 export default function StoryResult({ template, inputs, onTryAnother }) {
-  let result = template;
-  Object.entries(inputs).forEach(([key, value]) => {
-    result = result.replaceAll(`[${key}]`, value);
-  });
+  const result = fillTemplate(template, inputs);
   return (
     <div className="madlibs-result">
       <h2>Your Mad Libs Story</h2>
