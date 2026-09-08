@@ -1,5 +1,7 @@
 # MadLibs Story Maker
 
+[![CI](https://github.com/Ronyboxer/madlibs-story-maker/actions/workflows/ci.yml/badge.svg)](https://github.com/Ronyboxer/madlibs-story-maker/actions/workflows/ci.yml)
+
 A fill-in-the-blank story generator. Pick a story, type a word for each blank,
 and the finished story is assembled from what you entered.
 
