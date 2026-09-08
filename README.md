@@ -1,28 +1,61 @@
-# ✍️ MadLibs Story Maker
+# MadLibs Story Maker
 
-**MadLibs Story Maker** is a fun, interactive web app built with React that lets users create hilarious and unpredictable stories by filling in the blanks of quirky sentence templates.
+A fill-in-the-blank story generator. Pick a story, type a word for each blank,
+and the finished story is assembled from what you entered.
 
-Whether you're bored, feeling creative, or just want to laugh with friends, this app turns your words into wild, weird, and often ridiculous stories!
+Live: https://madlibs-story-maker.vercel.app
 
----
+## How it works
 
-## 🎉 Features
+Stories live in `src/pages/madLibTemplates.js` as plain objects, a title and a
+template string with blanks marked in square brackets:
 
-- 20+ unique story templates with multiple sentences
-- Placeholders like `[noun]`, `[verb]`, `[place]`, `[adjective]`, etc.
-- Dynamic story rendering based on user input
-- Real-time prompt system that collects words in a friendly, step-by-step format
-- Mobile-friendly and responsive design
-- Super simple and fun to use
+```js
+{
+  title: "Robot Rebellion 3000",
+  template: "In the year [number], robots ruled the world and forced all
+             humans to [verb] in the [place]..."
+}
+```
 
----
+Nothing else knows what the blanks are in advance. `ChooseMadLibs.jsx` pulls
+them out of the template at runtime with a single regex:
 
-## 🕹️ How to Play
+```js
+Array.from(template.matchAll(/\[([^\]]+)\]/g)).map(m => m[1])
+```
 
-1. Open the app in your browser.
-2. You'll see a story prompt with blank placeholders.
-3. Enter the requested words (e.g., a noun, verb, adjective, etc.).
-4. Hit “Generate” and watch your story come to life!
-5. Laugh. Share. Repeat.
+The form is then generated from that list. Adding a story means adding one
+object to the templates file. No form code changes, no new component, no
+registry to update. That is the part of this project I would keep if I rebuilt
+it.
 
----
+## The flow
+
+| Step | Component |
+|---|---|
+| Pick a story from the list | `MadLibSelector.jsx` |
+| Fill in one input per blank | `PlaceholderForm.jsx` |
+| Read the finished story | `StoryResult.jsx` |
+
+`ChooseMadLibs.jsx` holds the step state and passes data between the three.
+
+There are currently 20 templates. Blanks repeat within a story, so the same
+`[place]` you typed at the start comes back at the end, which is what makes the
+results read like an actual story instead of a word list.
+
+## Run it
+
+```bash
+npm install
+npm run dev
+```
+
+React and Vite. No backend, no state library, no dependencies beyond React
+itself.
+
+## What I would do next
+
+- Let people share a finished story with a link, by encoding the inputs in the URL
+- Group the blanks by type so you are not asked for a noun five separate times
+- Add validation, since an empty input currently renders an empty gap
