@@ -55,6 +55,16 @@ npm install
 npm run dev
 ```
 
+## Tests
+
+```bash
+npm test
+```
+
+Twenty-three tests, under a second, no network. They cover placeholder
+extraction and substitution, the shipped story collection's invariants, and
+that the form never asks for the same blank twice.
+
 React and Vite. No backend, no state library, no dependencies beyond React
 itself.
 
