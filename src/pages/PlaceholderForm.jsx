@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function PlaceholderForm({ template, placeholders, onSubmit }) {
+export default function PlaceholderForm({ placeholders, onSubmit }) {
   const [inputs, setInputs] = useState({});
   return (
     <form className="madlibs-form" onSubmit={e => {e.preventDefault(); onSubmit(inputs);}}>
