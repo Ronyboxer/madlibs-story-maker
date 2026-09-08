@@ -5,6 +5,8 @@ and the finished story is assembled from what you entered.
 
 Live: https://madlibs-story-maker.vercel.app
 
+![Choosing a story](assets/screenshot.png)
+
 ## How it works
 
 Stories live in `src/pages/madLibTemplates.js` as plain objects, a title and a
